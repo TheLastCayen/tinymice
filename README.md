@@ -1,5 +1,6 @@
-Tinymice is a simple and light Auto Clicker developed with Lazarus.  The target operating system is linux but windows user can compile the software by removing codebotctrls from the dependency.
-This software need Sqlite. To avoid libsqlite3.so error, you need to install libsqlite3-dev.
+TinyMice is a simple and light Auto Clicker developed with Lazarus.  
+
+The target operating system is Linux, but windows user can compile the software by removing codebotctrls from the Project Dependency. There is also a version of Lazarus for Mac but since I don't own a mac, I can't try to port TinyMice. 
 
 **License**:
 
@@ -13,7 +14,8 @@ This software need Sqlite. To avoid libsqlite3.so error, you need to install lib
 
 ![](pictures/screenshot/systray.png)
 
-**Install Instructions(more packages will be add soon)**
+**Install Instructions**
+(more packages coming soon)
 
 ###### Download
 
@@ -21,28 +23,46 @@ This software need Sqlite. To avoid libsqlite3.so error, you need to install lib
 
 ###### Ubuntu Install Command
 
-	sudo dpkg -i tinymice_0.5-1.deb
+```bash
+sudo dpkg -i tinymice_0.5-1.deb
+```
 
-**Linux dependency:**
+**Compiling Dependency :**
 
-###### Compile:
+###### Compiler && IDE: 
 
-	Lazarus 2.0.6
-	FPC 3.0.4
-	libxtst-dev
-	libsqlite3-dev
+- Lazarus 2.0.6
+- FPC 3.0.4
 
-###### Compile command:
+###### Linux Library: 
+
+- Libxtst development package
+- sqlite3 development package
+
+###### Windows Library: 
+
+- sqlite3
+
+  
+
+##### Installing Linux library:
+
+- Ubuntu:  ```sudo apt-get install libxtst-dev libsqlite3-dev ```
+
+- Fedora : ``` sudo yum ```
+
+  
+
+**Compile command:**
 
 ```bash
 lazbuild ptinymice.lpi
 ```
 
-**External Download:**
+**External Download Links:**
 
-```bash
-Lazarus && FPC: https://sourceforge.net/projects/lazarus/files/
-Cross.Codebot:	https://github.com/sysrpl/Cross.Codebot
-Sqlite:	https://www.sqlite.org/download.html
-```
+[Lazarus && FPC](https://sourceforge.net/projects/lazarus/files/)
+[Cross.Codebo](https://github.com/sysrpl/Cross.Codebot)
+[Sqlite](https://www.sqlite.org/download.html)
+
 
