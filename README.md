@@ -27,10 +27,10 @@ This software need Sqlite. To avoid libsqlite3.so error, you need to install lib
 
 	libsqlite3-dev
 
-###### Compile command:
+###### Compile command (Tested under Linux Mint 19.3):
 
 ```bash
-'/usr/bin/fpc'  -MObjFPC -Scghi -CX -Cg -Os4 -XX -l -vewnhibq -Filib/x86_64-linux -FuAbout -Fu../.lib/Cross.Codebot-master/source/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.6/components/mouseandkeyinput/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.6/lcl/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.0.6/lcl/units/x86_64-linux -Fu/usr/share/lazarus/2.0.6/components/lazutils/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.6/packager/units/x86_64-linux -Fu. -FUlib/x86_64-linux -FEbin -obin/tinymice -dUseCThreads -dLCL -dLCLgtk2
+'/usr/bin/fpc'  -MObjFPC -Scghi -CX -Cg -Os4 -XX -l -vewnhibq -Filib/x86_64-linux -FuAbout -Fulib/Cross.Codebot-master/source/lib/x86_64-linux -Fu../../.lazarus/lib/LazMouseAndKeyInput/lib/x86_64-linux -Fu../../Downloads/lazarus/Cross.Codebot-master/source/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.6/lcl/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.0.6/lcl/units/x86_64-linux -Fu/usr/share/lazarus/2.0.6/components/lazutils/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.6/packager/units/x86_64-linux -Fu. -FUlib/x86_64-linux -FEbin -obin/tinymice -dUseCThreads -dLCL -dLCLgtk2
 ```
 
 **Ubuntu  stand dependency:**
