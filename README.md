@@ -13,30 +13,29 @@ This software need Sqlite. To avoid libsqlite3.so error, you need to install lib
 
 ![](pictures/screenshot/systray.png)
 
+**Install Instructions(more packages will be add soon)**
+
+###### Download
+
+​	[Ubuntu](https://raw.githubusercontent.com/TheLastCayen/tinymice/master/bin/tinymice_0.5-1.deb)
+
+###### Ubuntu Install Command
+
+	sudo dpkg -i tinymice_0.5-1.deb
+
 **Linux dependency:**
 
 ###### Compile:
 
 	Lazarus 2.0.6
 	FPC 3.0.4
-	Cross.Codebot 
 	libxtst-dev
-	libgl-dev
-
-###### Execute:
-
 	libsqlite3-dev
 
-###### Compile command (Tested under Linux Mint 19.3):
+###### Compile command:
 
 ```bash
-'/usr/bin/fpc'  -MObjFPC -Scghi -CX -Cg -Os4 -XX -l -vewnhibq -Filib/x86_64-linux -FuAbout -Fulib/Cross.Codebot-master/source/lib/x86_64-linux -Fu../../.lazarus/lib/LazMouseAndKeyInput/lib/x86_64-linux -Fu../../Downloads/lazarus/Cross.Codebot-master/source/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.6/lcl/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.0.6/lcl/units/x86_64-linux -Fu/usr/share/lazarus/2.0.6/components/lazutils/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.6/packager/units/x86_64-linux -Fu. -FUlib/x86_64-linux -FEbin -obin/tinymice -dUseCThreads -dLCL -dLCLgtk2
-```
-
-**Ubuntu  stand dependency:**
-
-```bash
-sudo apt-get install libsqlite3-dev
+lazbuild ptinymice.lpi
 ```
 
 **External Download:**
