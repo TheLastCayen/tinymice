@@ -40,12 +40,14 @@
     <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="codebotctrls"/>
+        <DefaultFilename Value="lib/Cross.Codebot-master/source/codebotctrls.lpk"/>
       </Item1>
       <Item2>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LazMouseAndKeyInput"/>
+        <DefaultFilename Value="/usr/share/lazarus/2.0.6/components/mouseandkeyinput/lazmouseandkeyinput.lpk"/>
       </Item2>
       <Item3>
-        <PackageName Value="LazMouseAndKeyInput"/>
+        <PackageName Value="FCL"/>
       </Item3>
       <Item4>
         <PackageName Value="LCL"/>
