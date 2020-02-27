@@ -1,7 +1,3 @@
----
-typora-root-url: pictures/screenshot
----
-
 ﻿Tinymice is a simple and light Auto Clicker developed with Lazarus.  The target operating system is linux but windows user can compile the software by removing codebotctrls from the dependency.
 This software need Sqlite. To avoid libsqlite3.so error, you need to install libsqlite3-dev.
 
@@ -11,13 +7,11 @@ This software need Sqlite. To avoid libsqlite3.so error, you need to install lib
 
 **Screenshot**:
 
-![](/Main.png)
+![](pictures/screenshot/Main.png)
 
-![](/Options.png)
+![](pictures/screenshot/Options.png)
 
-
-
-![](/systray.png)
+![](pictures/screenshot/systray.png)
 
 **Linux dependency:**
 
