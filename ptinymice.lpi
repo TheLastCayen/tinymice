@@ -40,11 +40,9 @@
     <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="codebotctrls"/>
-        <DefaultFilename Value="lib/Cross.Codebot-master/source/codebotctrls.lpk"/>
       </Item1>
       <Item2>
         <PackageName Value="LazMouseAndKeyInput"/>
-        <DefaultFilename Value="/usr/share/lazarus/2.0.6/components/mouseandkeyinput/lazmouseandkeyinput.lpk"/>
       </Item2>
       <Item3>
         <PackageName Value="FCL"/>
@@ -106,15 +104,14 @@
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>
-      <SmartLinkUnit Value="True"/>
       <Optimizations>
-        <OptimizationLevel Value="4"/>
+        <OptimizationLevel Value="0"/>
       </Optimizations>
-      <SmallerCode Value="True"/>
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
+        <UseValgrind Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>
       <Options>
