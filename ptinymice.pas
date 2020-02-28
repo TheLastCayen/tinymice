@@ -27,8 +27,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, uprofilename, udeleteprofile, uabout,
-  uoptions, umain, lazmouseandkeyinput, DefaultTranslator;
+  Forms, uprofilename, udeleteprofile, uabout, uoptions, umain,
+  lazmouseandkeyinput, DefaultTranslator;
 
 {$R *.res}
 

@@ -39,12 +39,10 @@
     </RunParams>
     <RequiredPackages Count="4">
       <Item1>
-        <PackageName Value="codebot"/>
-        <DefaultFilename Value="libs/Cross.Codebot-master/source/codebot.lpk"/>
+        <PackageName Value="codebotctrls"/>
       </Item1>
       <Item2>
         <PackageName Value="LazMouseAndKeyInput"/>
-        <DefaultFilename Value="libs/mouseandkeyinput/lazmouseandkeyinput.lpk"/>
       </Item2>
       <Item3>
         <PackageName Value="FCL"/>

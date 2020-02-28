@@ -3,7 +3,7 @@
   <ProjectSession>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="ptinymice.pas"/>
         <IsPartOfProject Value="True"/>
@@ -50,7 +50,6 @@
         <ComponentName Value="FMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="23"/>
         <CursorPos X="79" Y="42"/>
@@ -74,6 +73,15 @@
         <UsageCount Value="20"/>
         <DefaultSyntaxHighlighter Value="None"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="libs/Cross.Codebot-master/source/codebot.input.hotkeys.pas"/>
+        <UnitName Value="Codebot.Input.Hotkeys"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="101" Y="2"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit8>
     </Units>
     <JumpHistory Count="1">
       <Position1>
