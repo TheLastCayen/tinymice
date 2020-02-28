@@ -39,7 +39,7 @@
     </RunParams>
     <RequiredPackages Count="4">
       <Item1>
-        <PackageName Value="codebotctrls"/>
+        <PackageName Value="codebot"/>
       </Item1>
       <Item2>
         <PackageName Value="LazMouseAndKeyInput"/>
