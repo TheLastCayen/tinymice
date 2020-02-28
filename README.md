@@ -72,6 +72,7 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 ### Command
 
 ```bash
+lazbuild libs/Cross.Codebot-master/source/codebot.lpk 
 lazbuild ptinymice.lpi
 ```
 
