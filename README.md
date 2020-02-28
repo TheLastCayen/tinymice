@@ -1,12 +1,24 @@
+
+
+
+
+# Description
+
 TinyMice is a simple and light Auto Clicker developed with Lazarus.  
 
 The target operating system is Linux, but windows user can compile the software by removing codebotctrls from the Project Dependency. There is also a version of Lazarus for Mac but since I don't own a mac, I can't try to port TinyMice. 
 
-**License**:
 
-	GPL V3
 
-**Screenshot**:
+# **License**
+
+GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
+
+![](https://www.gnu.org/graphics/gplv3-or-later.png)
+
+
+
+# **Screenshot**
 
 ![](pictures/screenshot/Main.png)
 
@@ -14,52 +26,58 @@ The target operating system is Linux, but windows user can compile the software 
 
 ![](pictures/screenshot/systray.png)
 
-**Install Instructions**
-(more packages coming soon)
+# How To Install
 
-###### Download
+### Download
 
 ​	[Ubuntu](https://raw.githubusercontent.com/TheLastCayen/tinymice/master/bin/tinymice_0.5-1.deb)
 
-###### Ubuntu Install Command
+(more packages coming soon)
 
-```bash
-sudo dpkg -i tinymice_0.5-1.deb
-```
+### Command
 
-**Compiling Dependency :**
+- Ubuntu:  ```sudo dpkg -i tinymice_0.5-1.deb ```
+- Fedora : (Coming soon)
 
-###### Compiler && IDE: 
+
+
+# How To Compile
+
+### **Dependency**
+
+##### Compiler && IDE: 
 
 - Lazarus 2.0.6
 - FPC 3.0.4
 
-###### Linux Library: 
+##### Linux Library: 
 
 - Libxtst development package
 - sqlite3 development package
 
-###### Windows Library: 
+##### Windows Library: 
 
 - sqlite3
 
   
 
-##### Installing Linux library:
+### Installing Library
 
 - Ubuntu:  ```sudo apt-get install libxtst-dev libsqlite3-dev ```
 
-- Fedora : ``` sudo yum ```
+- Fedora : (Coming soon)
 
   
 
-**Compile command:**
+### Command
 
 ```bash
 lazbuild ptinymice.lpi
 ```
 
-**External Download Links:**
+
+
+# External Download Links
 
 [Lazarus && FPC](https://sourceforge.net/projects/lazarus/files/)
 [Cross.Codebo](https://github.com/sysrpl/Cross.Codebot)
