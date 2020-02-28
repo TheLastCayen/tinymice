@@ -58,22 +58,6 @@
         <LoadedDesigner Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="pictures/umain.pas"/>
-        <ComponentName Value="FMain"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UsageCount Value="20"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="lib/LazMouseAndKeyInput/lib/x86_64-linux/LazMouseAndKeyInput.compiled"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
-        <DefaultSyntaxHighlighter Value="None"/>
-      </Unit7>
-      <Unit8>
         <Filename Value="libs/Cross.Codebot-master/source/codebot.input.hotkeys.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Codebot.Input.Hotkeys"/>
@@ -82,6 +66,22 @@
         <CursorPos X="56" Y="7"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="pictures/umain.pas"/>
+        <ComponentName Value="FMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="lib/LazMouseAndKeyInput/lib/x86_64-linux/LazMouseAndKeyInput.compiled"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="None"/>
       </Unit8>
     </Units>
     <JumpHistory Count="1">

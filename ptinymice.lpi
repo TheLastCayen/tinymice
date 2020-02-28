@@ -40,9 +40,11 @@
     <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="codebotctrls"/>
+        <DefaultFilename Value="libs/Cross.Codebot-master/source/codebotctrls.lpk"/>
       </Item1>
       <Item2>
         <PackageName Value="LazMouseAndKeyInput"/>
+        <DefaultFilename Value="libs/mouseandkeyinput/lazmouseandkeyinput.lpk" Prefer="True"/>
       </Item2>
       <Item3>
         <PackageName Value="FCL"/>
