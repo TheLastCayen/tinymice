@@ -63,9 +63,9 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Installing Library
 
-- Ubuntu:  ```sudo apt-get install libxtst-dev libsqlite3-dev ```
+- Ubuntu:  `sudo apt-get install libxtst-dev libsqlite3-dev `
 
-- Fedora :  ```sudo yum install libXtst-devel.x86_64 libsqlite3x-devel.x86_64 ```
+- Fedora :  `sudo dnf install libXtst-devel libsqlite3x-devel`
 
   
 
