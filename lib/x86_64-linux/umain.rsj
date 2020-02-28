@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":115329104,"name":"umain.cdeleteprofile","sourcebytes":[68,101,108,101,116,101,32,112,114,111,102,105,108,101,32,58,32],"value":"Delete profile : "},
+{"hash":127258741,"name":"umain.cprofile","sourcebytes":[80,114,111,102,105,108,101],"value":"Profile"},
+{"hash":20735790,"name":"umain.cmouseaction","sourcebytes":[77,111,117,115,101,32,65,99,116,105,111,110],"value":"Mouse Action"},
+{"hash":74225416,"name":"umain.cmousex","sourcebytes":[77,111,117,115,101,32,88],"value":"Mouse X"},
+{"hash":74225417,"name":"umain.cmousey","sourcebytes":[77,111,117,115,101,32,89],"value":"Mouse Y"}
+]}
