@@ -75,10 +75,11 @@
       </Unit7>
       <Unit8>
         <Filename Value="libs/Cross.Codebot-master/source/codebot.input.hotkeys.pas"/>
+        <IsPartOfProject Value="True"/>
         <UnitName Value="Codebot.Input.Hotkeys"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="101" Y="2"/>
+        <CursorPos X="56" Y="7"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit8>

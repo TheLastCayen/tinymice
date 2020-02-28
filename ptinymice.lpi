@@ -51,7 +51,7 @@
         <PackageName Value="LCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="ptinymice.pas"/>
         <IsPartOfProject Value="True"/>
@@ -91,6 +91,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="libs/Cross.Codebot-master/source/codebot.input.hotkeys.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Codebot.Input.Hotkeys"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -100,7 +105,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="About"/>
+      <OtherUnitFiles Value="About;libs/Cross.Codebot-master/source"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>
