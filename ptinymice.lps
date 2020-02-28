@@ -7,7 +7,6 @@
       <Unit0>
         <Filename Value="ptinymice.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="8"/>
         <CursorPos X="59" Y="12"/>
         <UsageCount Value="21"/>
@@ -51,9 +50,10 @@
         <ComponentName Value="FMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="18"/>
-        <CursorPos X="64" Y="34"/>
+        <TopLine Value="23"/>
+        <CursorPos X="5" Y="36"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
