@@ -68,6 +68,8 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 - Fedora :  `sudo dnf install libXtst-devel libsqlite3x-devel`
 
+- Windows: `Extract sqlite3.def and sqlite3.dll in "bin\" folder or in the same folder as the tinymice.exe .` 
+
   
 
 ### Command
@@ -78,7 +80,7 @@ lazbuild ptinymice.lpi
 
 
 
-# External Download Links
+# External Links
 
 [Lazarus && FPC](https://www.lazarus-ide.org/)
 
