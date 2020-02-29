@@ -30,9 +30,9 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Download
 
-[Ubuntu](https://github.com/TheLastCayen/TinyMicePackages/blob/master/bin/tinymice_0.5-1.deb)  
+[Ubuntu](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.5-1.deb)  
 
-[Windows X64](https://raw.githubusercontent.com/TheLastCayen/TinyMicePackages/tree/master/bin/TinyMice.msi)
+[Windows X64](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/TinyMice.msi)
 
 ### Command
 
