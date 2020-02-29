@@ -6,7 +6,7 @@
 
 TinyMice is a simple and light Auto Clicker developed with Lazarus. 
 
-The target operating system is Linux, but Windows users can compile the software by removing codebotctrls from the project dependency. There is also a version of Lazarus for Mac OS, but I will need help to support a Mac OS binary.
+The target operating system is Linux,  Windows users can compile the software by removing codebotctrls from the project dependency. There is also a version of Lazarus for Mac OS, but I will need help to support a Mac OS binary.
 
 
 
@@ -30,9 +30,9 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Download
 
-​	[Ubuntu](https://raw.githubusercontent.com/TheLastCayen/tinymice/master/bin/tinymice_0.5-1.deb)
+[Ubuntu](https://github.com/TheLastCayen/TinyMicePackages/blob/master/bin/tinymice_0.5-1.deb)  
 
-(more packages coming soon)
+[Windows X64](https://raw.githubusercontent.com/TheLastCayen/TinyMicePackages/tree/master/bin/TinyMice.msi)
 
 ### Command
 
@@ -47,17 +47,17 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ##### Compiler && IDE: 
 
-- Lazarus 2.0.6
-- FPC 3.0.4
+- [Lazarus 2.0.6](https://www.lazarus-ide.org/index.php?page=downloads)
+- [FPC 3.0.4](https://www.lazarus-ide.org/index.php?page=downloads)
 
 ##### Linux Library: 
 
-- Libxtst development package
-- sqlite3 development package
+- [Libxtst development package](http://www.linuxfromscratch.org/blfs/view/svn/x/x7lib.html)
+- [sqlite3 development package](https://www.sqlite.org/download.html)
 
 ##### Windows Library: 
 
-- sqlite3
+- [sqlite3](https://www.sqlite.org/download.html)
 
   
 
@@ -79,10 +79,10 @@ lazbuild ptinymice.lpi
 
 # External Download Links
 
-[Lazarus && FPC](https://sourceforge.net/projects/lazarus/files/)
+[Lazarus && FPC](https://www.lazarus-ide.org/)
 
 [Cross.Codebo](https://github.com/sysrpl/Cross.Codebot)
 
-[Sqlite](https://www.sqlite.org/download.html)
+[Sqlite](https://www.sqlite.org/)
 
 
