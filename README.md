@@ -39,6 +39,7 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 ### Command
 
 - Ubuntu:  `sudo dpkg -i tinymice_0.5-1.deb `
+- Fedora: `sudo -i tinymice-0.5-1.x86_64.rpm`
 - Windows: `msiexec.exe /i TinyMice.msi`
 
 
