@@ -2134,7 +2134,7 @@ object FDeleteProfile: TFDeleteProfile
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 4
-    Height = 21
+    Height = 16
     Top = 4
     Width = 197
     Alignment = taCenter
@@ -2152,8 +2152,8 @@ object FDeleteProfile: TFDeleteProfile
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 4
-    Height = 21
-    Top = 29
+    Height = 16
+    Top = 24
     Width = 197
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
@@ -2170,8 +2170,8 @@ object FDeleteProfile: TFDeleteProfile
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 4
-    Height = 21
-    Top = 54
+    Height = 16
+    Top = 44
     Width = 197
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
@@ -2185,10 +2185,10 @@ object FDeleteProfile: TFDeleteProfile
     AnchorSideTop.Control = EConfirm
     AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = BCancel
-    Left = 40
-    Height = 35
-    Top = 121
-    Width = 78
+    Left = 47
+    Height = 30
+    Top = 101
+    Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
     BorderSpacing.Left = 4
@@ -2209,10 +2209,10 @@ object FDeleteProfile: TFDeleteProfile
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
-    Left = 122
-    Height = 35
-    Top = 121
-    Width = 79
+    Left = 126
+    Height = 30
+    Top = 101
+    Width = 75
     Anchors = [akTop, akRight]
     AutoSize = True
     BorderSpacing.Left = 4
@@ -2223,7 +2223,7 @@ object FDeleteProfile: TFDeleteProfile
     Constraints.MinHeight = 26
     Constraints.MinWidth = 75
     Images = FMain.ImageList1
-    ImageIndex = 10
+    ImageIndex = 12
     OnClick = BCancelClick
     TabOrder = 2
   end
@@ -2234,8 +2234,8 @@ object FDeleteProfile: TFDeleteProfile
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     Left = 4
-    Height = 33
-    Top = 84
+    Height = 28
+    Top = 69
     Width = 197
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 4
@@ -2253,7 +2253,7 @@ object FDeleteProfile: TFDeleteProfile
     AnchorSideRight.Side = asrBottom
     Left = 4
     Height = 1
-    Top = 79
+    Top = 64
     Width = 197
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]

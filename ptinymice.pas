@@ -28,7 +28,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, uprofilename, udeleteprofile, uabout, uoptions, umain,
-  lazmouseandkeyinput, Codebot.Input.Hotkeys, DefaultTranslator;
+  lazmouseandkeyinput, Codebot.Input.Hotkeys, lcltranslator;
 
 {$R *.res}
 

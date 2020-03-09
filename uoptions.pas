@@ -26,7 +26,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, DBCtrls,
-  ExtCtrls, Buttons, LCLType, sqlite3conn, sqldb, db,DefaultTranslator;
+  ExtCtrls, Buttons, LCLType, sqlite3conn, sqldb, db, lcltranslator;
 
 type
 
@@ -80,6 +80,9 @@ var
 
 procedure TFOptions.BSaveClick(Sender: TObject);
 begin
+  DBConnection.Connected := True;
+  SQLTransaction.Active  := True;
+
   With SQLQuery do
     begin
       SQL.Clear;
@@ -87,14 +90,16 @@ begin
       SQL.Add('SET "StartMinimized" = '''+BoolToStr(CBStartMinimized.Checked)+''', ');
       SQL.Add('"CloseMinimized" = '''+BoolToStr(CBCloseMinimized.Checked)+''', ');
       SQL.Add('"SysTray" = '''+BoolToStr(CBSysTray.Checked)+''', ');
-      SQL.Add('"SingleClick" = '''+inttostr(StringToFKey(CBSingleClick.Text))+''', ');
-      SQL.Add('"ProfileClick" = '''+inttostr(StringToFKey(CBProfileClick.Text))+''', ');
-      SQL.Add('"SaveMouse" = '''+inttostr(StringToFKey(CBSaveMouse.Text))+''', ');
-      SQL.Add('"DeleteMouse" = '''+inttostr(StringToFKey(CBDeleteMouse.Text))+''' ');
+      SQL.Add('"FKeySingleClick" = '''+inttostr(StringToFKey(CBSingleClick.Text))+''', ');
+      SQL.Add('"FKeyProfileClick" = '''+inttostr(StringToFKey(CBProfileClick.Text))+''', ');
+      SQL.Add('"FKeySaveMouse" = '''+inttostr(StringToFKey(CBSaveMouse.Text))+''', ');
+      SQL.Add('"FKeyDeleteMouse" = '''+inttostr(StringToFKey(CBDeleteMouse.Text))+''' ');
       SQL.Add('WHERE  "ID" = ''1'';');
       ExecSQL;
     end;
   SQLTransaction.Commit;
+  SQLTransaction.Active  := False;
+  DBConnection.Connected := False;
   Close;
 end;
 
@@ -112,15 +117,13 @@ begin
 
   With  DBConnection do
     begin
-      HostName:='';
       DatabaseName:=GetAppConfigDir(False)+database;
-      UserName:='SYSDBA';
-      Password:='apple';
-      Charset := 'UTF8';
-      Params.Add('PAGE_SIZE=16384');
       Transaction := SQLTransaction;
     end;
   SQLQuery.DataBase   := DBConnection;
+
+  DBConnection.Connected := True;
+  SQLTransaction.Active  := True;
 
   CBSingleClick.Style  := csDropDown;
   CBProfileClick.Style := csDropDown;
@@ -134,10 +137,10 @@ begin
       SQL.Add('"StartMinimized", ');
       SQL.Add('"CloseMinimized", ');
       SQL.Add('"SysTray", ');
-      SQL.Add('"SingleClick", ');
-      SQL.Add('"ProfileClick", ');
-      SQL.Add('"SaveMouse", ');
-      SQL.Add('"DeleteMouse" ');
+      SQL.Add('"FKeySingleClick", ');
+      SQL.Add('"FKeyProfileClick", ');
+      SQL.Add('"FKeySaveMouse", ');
+      SQL.Add('"FKeyDeleteMouse" ');
       SQL.Add('FROM OPTIONS; ');
       Open;
 
@@ -145,13 +148,14 @@ begin
       CBCloseMinimized.Checked := FieldByName('CloseMinimized').AsBoolean;
       CBSysTray.Checked        := FieldByName('SysTray').AsBoolean;
 
-      CBSingleClick.Text  := FKeyToString(FieldByName('SingleClick').AsInteger);
-      CBProfileClick.Text := FKeyToString(FieldByName('ProfileClick').AsInteger);
-      CBSaveMouse.Text    := FKeyToString(FieldByName('SaveMouse').AsInteger);
-      CBDeleteMouse.Text  := FKeyToString(FieldByName('DeleteMouse').AsInteger);
-
+      CBSingleClick.Text  := FKeyToString(FieldByName('FKeySingleClick').AsInteger);
+      CBProfileClick.Text := FKeyToString(FieldByName('FKeyProfileClick').AsInteger);
+      CBSaveMouse.Text    := FKeyToString(FieldByName('FKeySaveMouse').AsInteger);
+      CBDeleteMouse.Text  := FKeyToString(FieldByName('FKeyDeleteMouse').AsInteger);
+      Close;
     end;
-
+  SQLTransaction.Active  := False;
+  DBConnection.Connected := False;
 end;
 
 procedure TFOptions.FormDestroy(Sender: TObject);

@@ -28,7 +28,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   MouseAndKeyInput, LCLType, ExtCtrls, Menus, Grids, Buttons, DBGrids,
   DBCtrls, MaskEdit, ComCtrls, Spin, uprofilename, udeleteprofile, uAbout,
-  uoptions, DefaultTranslator,lcltranslator, translations, FileUtil, LazFileUtils,  LazUTF8,
+  uoptions, lcltranslator, FileUtil, LazFileUtils,  LazUTF8, strutils,
   {$IFDEF Windows}
     windows,
   {$ENDIF}
@@ -55,6 +55,9 @@ type
     DBGProfiles: TDBGrid;
     DBGMouse: TDBGrid;
     MainMenu1: TMainMenu;
+    MenuItem1: TMenuItem;
+    MIContributor: TMenuItem;
+    MIChangelog: TMenuItem;
     SMILanguages: TMenuItem;
     N3: TMenuItem;
     MILanguages: TMenuItem;
@@ -94,6 +97,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormWindowStateChange(Sender: TObject);
     procedure MIAboutClick(Sender: TObject);
+    procedure MIChangelogClick(Sender: TObject);
+    procedure MIContributorClick(Sender: TObject);
     procedure MIOptionsClick(Sender: TObject);
     procedure MIQuitClick(Sender: TObject);
     procedure SEProfileClickEditingDone(Sender: TObject);
@@ -120,6 +125,8 @@ type
     procedure PlayProfile;
     procedure AddToProfile;
     procedure DelFromProfile;
+    procedure TestDB;
+    procedure MigrateDB;
     procedure CreateDB;
     Procedure PopulateDB;
     Procedure LoadOptions;
@@ -130,6 +137,7 @@ type
     procedure AddProfileToSystray(ProfileName: String; Selected:Boolean);
     procedure EmptySystrayProfiles;
     procedure SelectProfile(Sender: TObject);
+    procedure ChangeProfile(DataSet: TDataSet);
     function FindLanguageFiles:TStringList;
     procedure CreateLanguageMenuItems;
     function SelectLanguageFlag(Language:String): Integer;
@@ -149,14 +157,10 @@ implementation
 { TFMain }
 Const
   WH_KEYBOARD_LL = 13;
+  DatabaseVersion = 2.0; //Current Version of the database. For migration purpose
 
 type
-  TFkey = record
-    SingleClick  : Integer;
-    ProfileClick : Integer;
-    SaveMouse    : Integer;
-    DeleteMouse  : Integer;
-  end;
+
 
   TFKeyEnabled = record
     SimpleClick   : Boolean;
@@ -164,11 +168,25 @@ type
     ProfileRecord : Boolean;
   end;
 
+  TFkey = record
+    SingleClick  : Integer; //Fkey Start Single autoclick Default F4
+    ProfileClick : Integer; //Fkey Start Profile autoclick Default F5
+    SaveMouse    : Integer; //Fkey Save Mouse coordinate Default F7
+    DeleteMouse  : Integer; //FKey Delete Last Mouse Coordinate Default F8
+  end;
+
   TOptions = record
-    StartMinimized : Boolean;
-    CloseMinimized : Boolean;
-    SysTray   : Boolean;
-    Fkey      : TFkey;
+    StartMinimized : Boolean;            //Start Minimized
+    CloseMinimized : Boolean;            //Minimize on Close
+    SysTray   : Boolean;                 //Systray instead of taskbar
+    Fkey      : TFkey;                   //FKey
+    SelectedProfile : Integer;           //Selected Profile position in the grid
+    Language     : array[0..1] of Char;  //Prefered Language
+    DBGPColor    : TColor;               //Profile Grid Color
+    DBGPAltColor : TColor;               //Profile Grid Alternate Color
+    DBGMColor    : TColor;               //Mouse Grid Color
+    DBGMAltColor : TColor;               //Mouse Grid Alternate Color
+
   end;
 
 
@@ -202,19 +220,17 @@ resourcestring
 
 procedure TFMain.FormCreate(Sender: TObject);
 begin
+  //Disable FKey until application is ready
+  FKeyEnabled.SimpleClick  := False;
+  FKeyEnabled.ProfileClick := False;
+  FKeyEnabled.ProfileRecord:= False;
+
   //Load Language Files
   MILanguages.Clear;
   SMILanguages.Clear;
   CreateLanguageMenuItems;
 
-  //Set Fkey Disabled by default
-  FKeyEnabled.SimpleClick  := False;
-  FKeyEnabled.ProfileClick := False;
-  FKeyEnabled.ProfileRecord:= False;
-
-  DBGProfiles.AlternateColor:=clSkyBlue;
-  DBGMouse.AlternateColor := clSkyBlue;
-  //Database Connections
+  //Create Database Component
   DBConnection   := TSQLite3Connection.Create(nil);
   SQLTransaction := TSQLTransaction.Create(nil);
   SQLQuery       := TSQLQuery.Create(nil);
@@ -222,20 +238,20 @@ begin
   SQLMouse       := TSQLQuery.Create(nil);
   DataProfiles   := TDataSource.Create(nil);
   DataMouse      := TDataSource.Create(nil);
-  if not DirectoryExists(GetAppConfigDir(False)) then
-    CreateDir(GetAppConfigDir(False));
 
+  //Database Connections
   With  DBConnection do
     begin
-      HostName:='';
       DatabaseName:=GetAppConfigDir(False)+database;
-      UserName:='SYSDBA';
-      Password:='apple';
-      Charset := 'UTF8';
-      Params.Add('PAGE_SIZE=16384');
       Transaction := SQLTransaction;
     end;
 
+  TestDB;
+
+  //Load Application Settings
+  LoadOptions;
+
+  //Connect component with database
   SQLQuery.DataBase      := DBConnection;
   SQLProfiles.DataBase   := DBConnection;
   SQLMouse.DataBase      := DBConnection;
@@ -243,14 +259,11 @@ begin
   DataMouse.DataSet      := SQLMouse;
   DBGProfiles.DataSource := DataProfiles;
   DBGMouse.DataSource    := DataMouse;
+  DBGProfiles.DataSource.DataSet.AfterScroll := @ChangeProfile;
 
-  if not(FileExists(DBConnection.DatabaseName)) then
-    CreateDB;
   RefreshProfiles;
 
   EnableFunctions;
-
-  LoadOptions;
   RegisterKeyHook;
 
 end;
@@ -278,12 +291,40 @@ Var
   VAbout:TFAbout;
 begin
    VAbout:=TFAbout.Create(nil);
+   VAbout.PageControl1.ActivePageIndex := 0;
   try
     VAbout.ShowModal;
   finally
     VAbout.Free;
   end;
 End;
+
+procedure TFMain.MIChangelogClick(Sender: TObject);
+Var
+  VAbout:TFAbout;
+begin
+  VAbout:=TFAbout.Create(nil);
+  VAbout.PageControl1.ActivePageIndex := 2;
+  try
+    VAbout.ShowModal;
+  finally
+    VAbout.Free;
+  end;
+End;
+
+procedure TFMain.MIContributorClick(Sender: TObject);
+Var
+  VAbout:TFAbout;
+begin
+   VAbout:=TFAbout.Create(nil);
+   VAbout.PageControl1.ActivePageIndex := 1;
+  try
+    VAbout.ShowModal;
+  finally
+    VAbout.Free;
+  end;
+End;
+
 
 procedure TFMain.MIOptionsClick(Sender: TObject);
 Var
@@ -294,20 +335,29 @@ begin
 
   VOption:=TFOptions.Create(nil);
   try
+    MIOptions.Enabled  := False;
+    SMIOptions.Enabled := False;
     VOption.ShowModal;
+
   finally
-    VOption.Free;
+    FreeAndNil(VOption);
+    MIOptions.Enabled  := True;
+    SMIOptions.Enabled := True;
+
   end;
 
   DBConnection.Connected := True;
   SQLTransaction.Active := True;
+  LoadOptions;
   RefreshProfiles;
   RefreshMouse;
   RegisterKeyHook;
-  LoadOptions;
   EnableFunctions;
-  FMain.WindowState := wsNormal;
-  FMain.Show;
+  if not VOptions.SysTray then
+    begin
+      FMain.WindowState := wsNormal;
+      FMain.Show;
+    end
 end;
 
 procedure TFMain.BNewClick(Sender: TObject);
@@ -358,7 +408,7 @@ end;
 
 procedure TFMain.BDeleteClick(Sender: TObject);
 begin
-  if not(DBGMouse.DataSource.DataSet.Fields[0].Value = NULL) then
+  if DBGMouse.DataSource.DataSet.Fields[0].Value <> NULL then
     begin
       With SQLQuery do
         begin
@@ -384,7 +434,7 @@ procedure TFMain.BProfileDeleteClick(Sender: TObject);
 Var
   VDeleteProfile:TFDeleteProfile;
 begin
-  if not(DBGProfiles.DataSource.DataSet.Fields[0].Value = NULL) then
+  if DBGProfiles.DataSource.DataSet.Fields[0].Value <> NULL then
     begin
       VDeleteProfile := TFDeleteProfile.Create(nil);
       try
@@ -418,7 +468,7 @@ end;
 
 procedure TFMain.DBGMouseEditingDone(Sender: TObject);
 begin
-  if not(DBGMouse.DataSource.DataSet.Fields[0].Value = NULL) then
+  if DBGMouse.DataSource.DataSet.Fields[0].Value <> NULL then
     begin
       SQLMouse.Edit;
       SQLMouse.Post;
@@ -434,19 +484,19 @@ end;
 
 procedure TFMain.DBGProfilesCellClick(Column: TColumn);
 begin
-  if not(DBGProfiles.DataSource.DataSet.Fields[0].Value = NULL )then
+  if DBGProfiles.DataSource.DataSet.Fields[0].Value <> NULL then
     begin
-      SEProfileClick.Text:=DBGProfiles.DataSource.DataSet.Fields[3].Value;
       if SMIProfiles.Count > DBGProfiles.DataSource.DataSet.RecNo -1 then
         SMIProfiles.Items[DBGProfiles.DataSource.DataSet.RecNo-1].Checked:=true;
       RefreshMouse;
     end;
+
   EnableFunctions;
 end;
 
 procedure TFMain.DBGProfilesEditingDone(Sender: TObject);
 begin
- if not(DBGProfiles.DataSource.DataSet.Fields[0].Value = NULL) then
+ if DBGProfiles.DataSource.DataSet.Fields[0].Value <> NULL then
    begin
      SQLProfiles.Edit;
      SQLProfiles.Post;
@@ -554,10 +604,9 @@ begin
   For I := 0 to DBGMouse.Columns.Items[2].PickList.Count - 1 do
     If MAction = DBGMouse.Columns.Items[2].PickList.Strings[I] then Result := True;
 end;
+
 procedure TFMain.RegisterKeyHook;
 begin
-  LoadOptions;
-
  {$IFDEF Windows}
    UnhookWindowsHookEx(HookHandle);
    HookHandle := SetWindowsHookEx(WH_KEYBOARD_LL, HookPROC(@TFMain.AHookProc),HInstance, 0);
@@ -584,9 +633,8 @@ Begin
     HotkeyCapture.UnRegisterNotify(VOptions.Fkey.DeleteMouse,[]);
   {$ENDIF}
 end;
-
-////////////////////////////Linux FKey//////////////////////////////////////////
 {$IFDEF UNIX}
+////////////////////////////Linux FKey//////////////////////////////////////////
 procedure TFMain.KeyPressed(Sender: TObject; Key: Word; Shift: TShiftState);
 begin
 
@@ -663,10 +711,10 @@ begin
           SQL.Add('INSERT INTO "MOUSE" ');
           SQL.Add('("MouseAction","MouseX","MouseY","Profiles_ID")');
           SQL.ADD('VALUES (');
-          SQL.ADD(''''+DBGMouse.Columns.Items[2].PickList[0]+''', ');
-          SQL.ADD(''''+inttostr(Mouse.CursorPos.x)+''', ');
-          SQL.ADD(''''+inttostr(Mouse.CursorPos.Y)+''', ');
-          SQL.ADD(''''+inttostr(DBGProfiles.DataSource.DataSet.Fields[0].Value)+''');');
+          SQL.Add(''''+DBGMouse.Columns.Items[2].PickList[0]+''', ');
+          SQL.Add(''''+inttostr(Mouse.CursorPos.x)+''', ');
+          SQL.Add(''''+inttostr(Mouse.CursorPos.Y)+''', ');
+          SQL.Add(''''+inttostr(DBGProfiles.DataSource.DataSet.Fields[0].Value)+''');');
           ExecSQL;
         end;
       SQLTransaction.CommitRetaining;
@@ -682,15 +730,15 @@ var
 begin
   if FKeyEnabled.ProfileRecord then
     begin
-      if not(DBGMouse.DataSource.DataSet.Fields[0].Value = NULL) then
+      if DBGMouse.DataSource.DataSet.Fields[0].Value <> NULL then
         begin
           With SQLQuery do
             begin
               SQL.Clear;
               SQL.Add('SELECT ID ');
               SQL.Add('FROM MOUSE ');
-              SQL.ADD('WHERE ');
-              SQL.ADD('"Profiles_ID" = '+inttostr(DBGProfiles.DataSource.DataSet.Fields[0].Value)+' ');
+              SQL.Add('WHERE ');
+              SQL.Add('"Profiles_ID" = '+inttostr(DBGProfiles.DataSource.DataSet.Fields[0].Value)+' ');
               SQL.Add('ORDER BY "ID" DESC;');
               Open;
 
@@ -698,9 +746,9 @@ begin
               Close;
 
               SQL.Clear;
-              SQL.ADD('DELETE FROM "MOUSE" ');
-              SQL.ADD('WHERE ');
-              SQL.ADD('"ID" = '+ID+';');
+              SQL.Add('DELETE FROM "MOUSE" ');
+              SQL.Add('WHERE ');
+              SQL.Add('"ID" = '+ID+';');
               ExecSQL;
             end;
           SQLTransaction.CommitRetaining;
@@ -745,63 +793,216 @@ begin
   MouseInput.Click(mbLeft,[],Mouse.CursorPos.x,Mouse.CursorPos.y);
 end;
 
+procedure TFMain.TestDB;
+begin
+  if not DirectoryExists(GetAppConfigDir(False)) then
+    CreateDir(GetAppConfigDir(False));
+
+  if not(FileExists(DBConnection.DatabaseName)) then
+    CreateDB;
+
+  MigrateDB
+end;
+
+
+procedure TFMain.MigrateDB;
+var
+  SQLOption: TSQLQuery;
+  SQLUpdate: TSQLQuery;
+begin
+ // Load Settings
+  SQLOption := TSQLQuery.Create(nil);
+  SQLUpdate := TSQLQuery.Create(nil);
+  ///////////////////////////////////////////////////////////////////////////////////////;
+  SQLOption.DataBase := DBConnection;
+  SQLUpdate.DataBase := DBConnection;
+  SQLOption.Close;
+  SQLOption.SQL.Clear;
+  SQLOption.SQL.Add('SELECT ');
+  SQLOption.SQL.Add('*');
+  SQLOption.SQL.Add('FROM OPTIONS; ');
+  SQLOption.Open;
+
+  //If it's first version of database
+  if not Assigned(SQLOption.FindField('DatabaseVersion')) then
+    begin
+      With SQLUpdate do
+        begin
+          //Rename Table to remporary table
+          SQL.Add('ALTER TABLE "OPTIONS" RENAME TO "_OPTIONS_old";');
+          ExecSQL;
+          SQLTransaction.CommitRetaining;
+          //Create new Table
+          SQL.Clear;
+          SQL.Add('CREATE TABLE "OPTIONS"(');
+          SQL.Add('"ID" INTEGER NOT NULL PRIMARY KEY,');
+          SQL.Add('"StartMinimized"  SMALLINT,');
+          SQL.Add('"CloseMinimized"  SMALLINT,');
+          SQL.Add('"SysTray"  SMALLINT,');
+          SQL.Add('"FKeySingleClick"  SMALLINT,');
+          SQL.Add('"FKeyProfileClick"  SMALLINT,');
+          SQL.Add('"FKeySaveMouse"  SMALLINT,');
+          SQL.Add('"FKeyDeleteMouse"  SMALLINT,');
+          SQL.Add('"SelectedProfile"  SMALLINT,');
+          SQL.Add('"DatabaseVersion"  REAL,');
+          SQL.Add('"Language" CHARACTER(2),');
+          SQL.Add('"DBGPColor" CHARACTER(20),');
+          SQL.Add('"DBGPAltColor" CHARACTER(20),');
+          SQL.Add('"DBGMColor" CHARACTER(20),');
+          SQL.Add('"DBGMAltColor" CHARACTER(20));');
+          ExecSQL;
+          SQLTransaction.CommitRetaining;
+          //Migrate data and create default values
+          SQLOption.Close;
+          SQLOption.SQL.Clear;
+          SQLOption.SQL.Add('SELECT ');
+          SQLOption.SQL.Add('*');
+          SQLOption.SQL.Add('FROM _OPTIONS_old; ');
+          SQLOption.Open;
+          SQL.Clear;
+          SQL.Add('INSERT INTO "OPTIONS"(');
+          SQL.Add('"StartMinimized", ');
+          SQL.Add('"CloseMinimized", ');
+          SQL.Add('"SysTray", ');
+          SQL.Add('"FKeySingleClick", ');
+          SQL.Add('"FKeyProfileClick", ');
+          SQL.Add('"FKeySaveMouse", ');
+          SQL.Add('"FkeyDeleteMouse",');
+          SQL.Add('"SelectedProfile",');
+          SQL.Add('"DatabaseVersion",');
+          SQL.Add('"Language",');
+          SQL.Add('"DBGPColor",');
+          SQL.Add('"DBGPAltColor",');
+          SQL.Add('"DBGMColor",');
+          SQL.Add('"DBGMAltColor"');
+          SQL.Add(') values (');
+          SQL.Add(''''+SQLOption.FieldByName('StartMinimized').AsString+''', ');
+          SQL.Add(''''+SQLOption.FieldByName('CloseMinimized').AsString+''', ');
+          SQL.Add(''''+SQLOption.FieldByName('SysTray').AsString+''', ');
+          SQL.Add(''''+SQLOption.FieldByName('SingleClick').AsString+''', ');
+          SQL.Add(''''+SQLOption.FieldByName('ProfileClick').AsString+''', ');
+          SQL.Add(''''+SQLOption.FieldByName('SaveMouse').AsString+''', ');
+          SQL.Add(''''+SQLOption.FieldByName('DeleteMouse').AsString+''', ');
+          SQL.Add(''''', ');
+          SQL.Add(''''+FloatToStr(DatabaseVersion)+''', ');
+          SQL.Add('''EN'', ');
+          SQL.Add(''''+ColorToString(clDefault)+''', ');
+          SQL.Add(''''+ColorToString(clSkyBlue)+''', ');
+          SQL.Add(''''+ColorToString(clDefault)+''', ');
+          SQL.Add(''''+ColorToString(clSkyBlue)+'''');
+          SQL.Add(');');
+          ExecSQL;
+          SQLTransaction.CommitRetaining;
+        end;
+    end;
+  //Add other version migration Here
+  //...
+
+  //Clean Temporary tables
+  SQLOption.Close;
+  SQLOption.SQL.Clear;
+  SQLOption.SQL.Add('SELECT ');
+  SQLOption.SQL.Add('*');
+  SQLOption.SQL.Add('FROM OPTIONS; ');
+  SQLOption.Open;
+
+  if SQLOption.FieldByName('DatabaseVersion').AsFloat = DatabaseVersion then
+    begin
+      SQLUpdate.SQL.Clear;
+      SQLUpdate.SQL.Add('DROP TABLE IF EXISTS "_OPTIONS_old";');
+      SQLUpdate.ExecSQL;
+      SQLTransaction.CommitRetaining;
+    end;
+
+  SQLOption.Close;
+  SQLUpdate.Close;
+  DBConnection.Close;
+  SQLUpdate.Free;
+  SQLOption.Free;
+end;
+
+
 procedure TFMain.CreateDB;
+var
+  SQLUpdate: TSQLQuery;
 begin
   DBConnection.CreateDB;
-  With SQLQuery do
+  SQLUpdate := TSQLQuery.Create(nil);
+  With SQLUpdate do
     begin
+      DataBase := DBConnection;
       SQL.Clear;
-      SQL.ADD('CREATE TABLE "OPTIONS"(');
-      SQL.ADD('"ID" INTEGER NOT NULL PRIMARY KEY,');
-      SQL.ADD('"StartMinimized"  SMALLINT,');
-      SQL.ADD('"CloseMinimized"  SMALLINT,');
-      SQL.ADD('"SysTray"  SMALLINT,');
-      SQL.ADD('"SingleClick"  SMALLINT,');
-      SQL.ADD('"ProfileClick"  SMALLINT,');
-      SQL.ADD('"SaveMouse"  SMALLINT,');
-      SQL.ADD('"DeleteMouse"  SMALLINT);');
+      SQL.Add('CREATE TABLE "OPTIONS"(');
+      SQL.Add('"ID" INTEGER NOT NULL PRIMARY KEY,');
+      SQL.Add('"StartMinimized"  SMALLINT,');     //Start Minimized
+      SQL.Add('"CloseMinimized"  SMALLINT,');     //Minimize on Close
+      SQL.Add('"SysTray"  SMALLINT,');            //Systray instead of taskbar
+      SQL.Add('"FKeySingleClick"  SMALLINT,');    //Fkey Start Single autoclick Default F4
+      SQL.Add('"FKeyProfileClick"  SMALLINT,');   //Fkey Start Profile autoclick Default F5
+      SQL.Add('"FKeySaveMouse"  SMALLINT,');      //Fkey Save Mouse coordinate Default F7
+      SQL.Add('"FKeyDeleteMouse"  SMALLINT,');    //FKey Delete Last Mouse Coordinate Default F8
+      SQL.Add('"SelectedProfile"  SMALLINT,');    //Selected Profile position in the grid
+      SQL.Add('"DatabaseVersion"  REAL,');        //Version of the Database
+      SQL.Add('"Language" CHARACTER(2),');        //Prefered Language
+      SQL.Add('"DBGPColor" CHARACTER(20),');      //Profile Grid Color
+      SQL.Add('"DBGPAltColor" CHARACTER(20),');   //Profile Grid Alternate Color
+      SQL.Add('"DBGMColor" CHARACTER(20),');      //Mouse Grid Color
+      SQL.Add('"DBGMAltColor" CHARACTER(20));');  //Mouse Grid Alternate Color
       ExecSQL;
       SQL.Clear;
 
+
       SQL.Clear;
-      SQL.ADD('CREATE TABLE "PROFILES"(');
-      SQL.ADD('"ID" INTEGER NOT NULL PRIMARY KEY,');
-      SQL.ADD('"GridPosition"  int,');
-      SQL.ADD('"Profiles"  varchar(100),');
-      SQL.ADD('"ClickTimer"  varchar(7));');
+      SQL.Add('CREATE TABLE "PROFILES"(');
+      SQL.Add('"ID" INTEGER NOT NULL PRIMARY KEY,');
+      SQL.Add('"GridPosition"  int,');           //Position of the profile in the Grid(interface)
+      SQL.Add('"Profiles"  varchar(100),');      //Profile Name
+      SQL.Add('"ClickTimer"  varchar(7));');     //Default Click interval
       ExecSQL;
 
       SQL.Clear;
-      SQL.ADD('CREATE TABLE "MOUSE" (');
-      SQL.ADD('"ID" INTEGER NOT NULL PRIMARY KEY,');
-      SQL.ADD('"GridPosition"  int,');
-      SQL.ADD('"MouseAction"  varchar(20),');
-      SQL.ADD('"MouseX" varchar(7),');
-      SQL.ADD('"MouseY" varchar(7),');
-      SQL.ADD('"ClickTimer"  SMALLINT,');
-      SQL.ADD('"Profiles_ID" int,');
-      SQL.ADD(' FOREIGN KEY ("Profiles_ID") REFERENCES PROFILES("ID"));');
+      SQL.Add('CREATE TABLE "MOUSE" (');
+      SQL.Add('"ID" INTEGER NOT NULL PRIMARY KEY,');
+      SQL.Add('"GridPosition"  int,');         //Position of the Mouse in the Grid(interface)
+      SQL.Add('"MouseAction"  varchar(20),');  //Mouse action to perform(Left Click, Righ Click ...)
+      SQL.Add('"MouseX" varchar(7),');         //Screen coordinate of the mouse on X axis
+      SQL.Add('"MouseY" varchar(7),');         //Screen coordinate of the mouse on Y axis
+      SQL.Add('"ClickTimer"  SMALLINT,');      //reserved for custome timer before click
+      SQL.Add('"Profiles_ID" int,');           //Assing to mouse action to profile
+      SQL.Add(' FOREIGN KEY ("Profiles_ID") REFERENCES PROFILES("ID"));');
       ExecSQL;
 
   end;
   SQLTransaction.Commit;
-  SQLQuery.Close;
+  SQLUpdate.Close;
+  SQLUpdate.Free;
   DBConnection.Close;
   PopulateDB;
 end;
 Procedure TFMain.PopulateDB;
+var
+  SQLUpdate : TSQLQuery;
 begin
-  With SQLQuery do
+  SQLUpdate := TSQLQuery.Create(nil);
+  With SQLUpdate do
     begin
+      DataBase := DBConnection;
       SQL.Clear;
       SQL.Add('INSERT INTO "OPTIONS"(');
       SQL.Add('"StartMinimized", ');
       SQL.Add('"CloseMinimized", ');
       SQL.Add('"SysTray", ');
-      SQL.Add('"SingleClick", ');
-      SQL.Add('"ProfileClick", ');
-      SQL.Add('"SaveMouse", ');
-      SQL.Add('"DeleteMouse"');
+      SQL.Add('"FKeySingleClick", ');
+      SQL.Add('"FKeyProfileClick", ');
+      SQL.Add('"FKeySaveMouse", ');
+      SQL.Add('"FkeyDeleteMouse",');
+      SQL.Add('"SelectedProfile",');
+      SQL.Add('"DatabaseVersion",');
+      SQL.Add('"Language",');
+      SQL.Add('"DBGPColor",');
+      SQL.Add('"DBGPAltColor",');
+      SQL.Add('"DBGMColor",');
+      SQL.Add('"DBGMAltColor"');
       SQL.Add(') values (');
       SQL.Add('''0'', ');
       SQL.Add('''0'', ');
@@ -809,19 +1010,29 @@ begin
       SQL.Add(''''+inttostr(VK_F4)+''', ');
       SQL.Add(''''+inttostr(VK_F5)+''', ');
       SQL.Add(''''+inttostr(VK_F7)+''', ');
-      SQL.Add(''''+inttostr(VK_F8)+'''');
+      SQL.Add(''''+inttostr(VK_F8)+''', ');
+      SQL.Add(''''', ');
+      SQL.Add(''''+FloatToStr(DatabaseVersion)+''', ');
+      SQL.Add('''EN'', ');
+      SQL.Add(''''+ColorToString(clDefault)+''', ');
+      SQL.Add(''''+ColorToString(clSkyBlue)+''', ');
+      SQL.Add(''''+ColorToString(clDefault)+''', ');
+      SQL.Add(''''+ColorToString(clSkyBlue)+'''');
       SQL.Add(');');
       ExecSQL;
     end;
+  SQLUpdate.Close;
+  SQLUpdate.Free;
   SQLTransaction.Commit;
 end;
 Procedure TFMain.LoadOptions;
 var
   SQLOption: TSQLQuery;
+  I: Integer;
 begin
  // Load Settings
   SQLOption := TSQLQuery.Create(nil);
-  With SQLQuery do
+  With SQLOption do
     begin
       DataBase := DBConnection;
       Close;
@@ -830,24 +1041,35 @@ begin
       SQL.Add('"StartMinimized", ');
       SQL.Add('"CloseMinimized", ');
       SQL.Add('"SysTray", ');
-      SQL.Add('"SingleClick", ');
-      SQL.Add('"ProfileClick", ');
-      SQL.Add('"SaveMouse", ');
-      SQL.Add('"DeleteMouse" ');
+      SQL.Add('"FKeySingleClick", ');
+      SQL.Add('"FKeyProfileClick", ');
+      SQL.Add('"FKeySaveMouse", ');
+      SQL.Add('"FKeyDeleteMouse", ');
+      SQL.Add('"SelectedProfile",');
+      SQL.Add('"Language",');
+      SQL.Add('"DBGPColor",');
+      SQL.Add('"DBGPAltColor",');
+      SQL.Add('"DBGMColor",');
+      SQL.Add('"DBGMAltColor" ');
       SQL.Add('FROM OPTIONS; ');
       Open;
       with VOptions do
         begin
-
           StartMinimized    := FieldByName('StartMinimized').AsBoolean;
           CloseMinimized    := FieldByName('CloseMinimized').AsBoolean;
           SysTray           := FieldByName('SysTray').AsBoolean;
+          Fkey.SingleClick  := FieldByName('FKeySingleClick').AsInteger;
+          Fkey.ProfileClick := FieldByName('FKeyProfileClick').AsInteger;
+          Fkey.SaveMouse    := FieldByName('FKeySaveMouse').AsInteger;
+          Fkey.DeleteMouse  := FieldByName('FKeyDeleteMouse').AsInteger;
+          SelectedProfile   := FieldByName('SelectedProfile').AsInteger;
+          Language          := FieldByName('Language').AsString;
+          DBGPColor         := StringToColor(FieldByName('DBGPColor').AsString);
+          DBGPAltColor      := StringToColor(FieldByName('DBGPAltColor').AsString);
+          DBGMColor         := StringToColor(FieldByName('DBGMColor').AsString);
+          DBGMAltColor      := StringToColor(FieldByName('DBGMAltColor').AsString);
 
-          Fkey.SingleClick  := FieldByName('SingleClick').AsInteger;
-          Fkey.ProfileClick := FieldByName('ProfileClick').AsInteger;
-          Fkey.SaveMouse    := FieldByName('SaveMouse').AsInteger;
-          Fkey.DeleteMouse  := FieldByName('DeleteMouse').AsInteger;
-
+          //Set systray
           If SysTray then
             begin
               TrayIcon1.Visible   := True;
@@ -855,10 +1077,21 @@ begin
             end
           else
             begin
-              TrayIcon1.Visible:=False;
-              FMain.ShowInTaskBar := stDefault;
+              TrayIcon1.Visible   := False;
+              FMain.ShowInTaskBar := stAlways;
+{################ ??? THIS IS NOT RESTAURING THE TASKBAR  ??? ######################}
             end;
 
+          //Set Default language
+          For I:= 0 to MILanguages.Count -1 do
+            if pos(MILanguages.Items[I].Caption, Language) > 0 then
+              ChangeLanguage(MILanguages.Items[I]);
+
+          //Set Grid Color
+          DBGProfiles.Color          := DBGPColor;
+          DBGProfiles.AlternateColor := DBGPAltColor;
+          DBGMouse.Color             := DBGMColor;
+          DBGMouse.AlternateColor    := DBGMAltColor;
         end;
       Close;
     end;
@@ -880,9 +1113,8 @@ begin
   DBGProfiles.Columns[1].Visible := False;
   DBGProfiles.Columns[3].Visible := False;
   DBGProfiles.Columns.Items[2].Title.Alignment := taCenter;
-  DBGProfiles.Columns.Items[2].Title.Caption   := CProfile;
+  DBGProfiles.Columns.Items[2].Title.Caption   := CProfile;;
   DBGProfilesCellClick(DBGProfiles.Columns[2]);
-
   EmptySystrayProfiles;
   If DBGProfiles.DataSource.DataSet.RecordCount>0 then
     begin
@@ -896,7 +1128,10 @@ begin
       DBGProfiles.DataSource.DataSet.EnableControls;
       SMIProfiles.Items[DBGProfiles.DataSource.DataSet.RecNo-1].Checked:=true;
     end;
-
+  //Set Default Profile
+  if (SMIProfiles.Count>0) and (VOptions.SelectedProfile>0) then
+    if (VOptions.SelectedProfile <= SMIProfiles.Count) then
+      SelectProfile(SMIProfiles.Items[VOptions.SelectedProfile-1])
 end;
 Procedure TFMain.RefreshMouse;
 begin
@@ -947,11 +1182,6 @@ end;
 
 Procedure TFMain.EnableFunctions;
 begin
-
-  //Load Settings
-  LoadOptions;
-
-
   if DBGProfiles.DataSource.DataSet.Fields[0].Value = NULL then
     begin
       SEProfileClick.Enabled   := False;
@@ -961,7 +1191,7 @@ begin
       BDelete.Enabled          := False;
       DBGMouse.Options         := DBGMouse.Options-[dgEditing];
       DBGProfiles.Options      := DBGProfiles.Options-[dgEditing];
-      DBGMouse.Options := DBGMouse.Options+[dgEditing];
+      DBGMouse.Options         := DBGMouse.Options+[dgEditing];
       FKeyEnabled.SimpleClick  := True;
       FKeyEnabled.ProfileClick := False;
       FKeyEnabled.ProfileRecord:= False;
@@ -976,7 +1206,7 @@ begin
       if DBGMouse.DataSource.DataSet.FieldCount > -1 then
         begin
           FKeyEnabled.ProfileRecord:= True;
-          if DBGMouse.DataSource.DataSet.Fields[0].Value = NULL then
+          if DBGMouse.DataSource.DataSet.FieldCount < 1 then
             begin
               BAdd.Enabled            := True;
               BDelete.Enabled         := False;
@@ -1039,7 +1269,34 @@ begin
         DBGProfiles.DataSource.DataSet.Next;
       DBGProfiles.DataSource.DataSet.EnableControls;
     end;
+
   RefreshMouse;
+  //////////////////////////////////////////////////////////////
+end;
+
+procedure TFMain.ChangeProfile(DataSet: TDataSet);
+var
+  SQLOption: TSQLQuery;
+begin
+  if DataSet.Fields[0].Value <> NULL then
+    begin
+      //Update Profile Timer
+      SEProfileClick.Text := DataSet.Fields[3].Value;
+      //Save selected profile
+      SQLOption := TSQLQuery.Create(nil);
+      With SQLOption do
+          begin
+            DataBase := DBConnection;
+            SQL.Clear;
+            SQL.Add('UPDATE OPTIONS ');
+            SQL.Add('SET "SelectedProfile" = '''+inttostr(DataSet.RecNo)+''' ');
+            SQL.Add('WHERE  "ID" = ''1''');
+            ExecSQL;
+            SQLTransaction.CommitRetaining;
+            Close;
+            Free;
+          end;
+    end;
 end;
 
 function TFMain.FindLanguageFiles:TStringList;
@@ -1103,22 +1360,40 @@ begin
 end;
 function TFMain.SelectLanguageFlag(Language:String): Integer;
 begin
-  Result := 14;
+  Result := 16;
   case Language of
-    'EN' : Result := 15;
-    'FR' : Result := 16;
-    'ES' : Result := 17;
-    'RU' : Result := 18;
-    'ZH' : Result := 19;
-    'JA' : Result := 20;
+    'EN' : Result := 17;
+    'FR' : Result := 18;
+    'ES' : Result := 19;
+    'RU' : Result := 20;
+    'ZH' : Result := 21;
+    'JA' : Result := 22;
   end;
 end;
 
 procedure TFMain.ChangeLanguage(Sender: TObject);
+var
+  SQLOption: TSQLQuery;
 begin
   SetDefaultLang(LowerCase(TMenuItem(Sender).Caption));
   MILanguages.Items[TMenuItem(Sender).MenuIndex].Checked  := True;
   SMILanguages.Items[TMenuItem(Sender).MenuIndex].Checked := True;
+
+  //Save new language
+  SQLOption := TSQLQuery.Create(nil);
+  With SQLOption do
+    begin
+      DataBase := DBConnection;
+      SQL.Clear;
+      SQL.Add('UPDATE OPTIONS ');
+      SQL.Add('SET "Language" = '''+TMenuItem(Sender).Caption+''' ');
+      SQL.Add('WHERE  "ID" = ''1''');
+      ExecSQL;
+      SQLTransaction.CommitRetaining;
+      Close;
+      Free;
+    end;
+
 end;
 
 end.

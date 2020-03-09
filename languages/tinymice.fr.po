@@ -10,30 +10,274 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
 "X-Generator: Poedit 2.0.6\n"
-"X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,0\n"
+
+#: tfabout.caption
+msgctxt "tfabout.caption"
+msgid "About"
+msgstr "À propos"
+
+#: tfabout.lcopyright.caption
+msgid "CopyRight (C)  2020, Daniel Babin"
+msgstr "CopyRight (C)  2020, Daniel Babin"
+
+#: tfabout.lemail.caption
+msgid "tinymice.github@gmail.com"
+msgstr "tinymice.github@gmail.com"
+
+#: tfabout.limage.caption
+msgid "Icons from Lazarus and www.iconarchive.com"
+msgstr "Icônes de Lazarus et www.iconarchive.com"
+
+#: tfabout.lurl.caption
+msgid "https://github.com/TheLastCayen/tinymice"
+msgstr "https://github.com/TheLastCayen/tinymice"
+
+#: tfabout.tsabout.caption
+msgctxt "tfabout.tsabout.caption"
+msgid "About"
+msgstr "À propos"
+
+#: tfabout.tschangelog.caption
+msgid "ChangeLog"
+msgstr "Journaux des Changements"
+
+#: tfabout.tscontributor.caption
+msgid "Contributors"
+msgstr "Contributeurs"
+
+#: tfdeleteprofile.bcancel.caption
+msgctxt "tfdeleteprofile.bcancel.caption"
+msgid "Cancel"
+msgstr "Annuler"
+
+#: tfdeleteprofile.bdelete.caption
+msgctxt "tfdeleteprofile.bdelete.caption"
+msgid "Delete"
+msgstr "supprimer"
+
+#: tfdeleteprofile.caption
+msgid "Delete Profile"
+msgstr "Supprimer Profil"
+
+#: tfdeleteprofile.lconfirm1.caption
+msgid "Please type :"
+msgstr "Veuillez saisir :"
+
+#: tfdeleteprofile.lconfirm2.caption
+msgid "delete"
+msgstr "supprimer"
+
+#: tfdeleteprofile.lconfirm3.caption
+msgid "to permanently Delete"
+msgstr "pour supprimer définitivement"
+
+#: tfmain.badd.caption
+msgid "Add"
+msgstr "Ajouter"
+
+#: tfmain.bdelete.caption
+msgctxt "tfmain.bdelete.caption"
+msgid "Delete"
+msgstr "Supprimer"
+
+#: tfmain.bnew.caption
+msgid "New"
+msgstr "Nouveau"
+
+#: tfmain.bprofiledelete.caption
+msgctxt "tfmain.bprofiledelete.caption"
+msgid "Delete"
+msgstr "Supprimer"
+
+#: tfmain.btest.caption
+msgid "Test"
+msgstr "Test"
+
+#: tfmain.caption
+msgid "TinyMice"
+msgstr "TinyMice"
+
+#: tfmain.etest.text
+msgid "0"
+msgstr "0"
+
+#: tfmain.lpanel.caption
+msgid "Auto Click Profiles"
+msgstr "Profils de clic automatique"
+
+#: tfmain.lprofileclick.caption
+msgctxt "tfmain.lprofileclick.caption"
+msgid "Profile Click Interval :"
+msgstr "Intervalle de clic du Profil :"
+
+#: tfmain.lsingleclick.caption
+msgid "Simple Click Interval :"
+msgstr "Intervalle de simple clic :"
+
+#: tfmain.miabout.caption
+msgid "&About"
+msgstr "À &propos"
+
+#: tfmain.michangelog.caption
+msgid "Chan&gelog"
+msgstr "Journaux des Chan&gements"
+
+#: tfmain.micontributor.caption
+msgid "&Contributor"
+msgstr "&Contributeurs"
+
+#: tfmain.mifile.caption
+msgid "&File"
+msgstr "&Fichier"
+
+#: tfmain.mihelp.caption
+msgid "&Help"
+msgstr "&Aide"
+
+#: tfmain.milanguages.caption
+msgid "&Languages"
+msgstr "&Langue"
+
+#: tfmain.mioptions.caption
+msgid "&Options"
+msgstr "&Options"
+
+#: tfmain.miquit.caption
+msgid "&Quit"
+msgstr "&Quitter"
+
+#: tfmain.mitools.caption
+msgid "&Tools"
+msgstr "O&utils"
+
+#: tfmain.seprofileclick.hint
+msgctxt "tfmain.seprofileclick.hint"
+msgid "Profile Click Interval in Millisecond"
+msgstr "Intervalle de clic du Profil en Milliseconde"
+
+#: tfmain.sesingleclick.hint
+msgid "Simple Click Interval in Millisecond"
+msgstr "Intervalle de simple clic en Millisecond"
+
+#: tfmain.smiabout.caption
+msgctxt "tfmain.smiabout.caption"
+msgid "About"
+msgstr "À &propos"
+
+#: tfmain.smilanguages.caption
+msgid "Languages"
+msgstr "Langue"
+
+#: tfmain.smioptions.caption
+msgctxt "tfmain.smioptions.caption"
+msgid "Options"
+msgstr "Options"
+
+#: tfmain.smiprofiles.caption
+msgid "Profiles"
+msgstr "Profiles"
+
+#: tfmain.smiquit.caption
+msgid "Quit"
+msgstr "Quitter"
+
+#: tfmain.smishow.caption
+msgid "Hide / Show"
+msgstr "Cacher / Afficher"
+
+#: tfoptions.bcancel.caption
+msgctxt "tfoptions.bcancel.caption"
+msgid "Cancel"
+msgstr "Annuler"
+
+#: tfoptions.bsave.caption
+msgctxt "tfoptions.bsave.caption"
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: tfoptions.caption
+msgctxt "tfoptions.caption"
+msgid "Options"
+msgstr "Options"
+
+#: tfoptions.cbcloseminimized.caption
+msgid "Minimize on Close"
+msgstr "Minimisé a la fermeture"
+
+#: tfoptions.cbstartminimized.caption
+msgid "Start Minimized"
+msgstr "Démarrer Minimisé"
+
+#: tfoptions.cbsystray.caption
+msgid "Minimize To Tray"
+msgstr "Réduire dans la zone de notification"
+
+#: tfoptions.label5.caption
+msgctxt "tfoptions.label5.caption"
+msgid "Profile"
+msgstr "Profil :"
+
+#: tfoptions.ldeletemouse.caption
+msgid "Delete Last Mouse Position :"
+msgstr "Supprimer la dernière position de la souris :"
+
+#: tfoptions.lprofileclick.caption
+msgid "Start / Stop Profile Click :"
+msgstr "Démarrer / Arrêter le clic du profil :"
+
+#: tfoptions.lsavemouse.caption
+msgid "Save Mouse Position :"
+msgstr "Sauvegarder la position de la souris :"
+
+#: tfoptions.lsingleclick.caption
+msgid "Start / Stop Single Click :"
+msgstr "Démarrer / Arrêter le simple clic :"
+
+#: tfprofilename.bcancel.caption
+msgctxt "tfprofilename.bcancel.caption"
+msgid "Cancel"
+msgstr "Annuler"
+
+#: tfprofilename.bsave.caption
+msgctxt "tfprofilename.bsave.caption"
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: tfprofilename.caption
+msgid "Profile Name"
+msgstr "Nom du Profil"
+
+#: tfprofilename.lprofilename.caption
+msgid "Profile :"
+msgstr "Profil :"
+
+#: tfprofilename.lsp.caption
+msgctxt "tfprofilename.lsp.caption"
+msgid "Profile Click Interval :"
+msgstr "Intervalle de clic du Profil :"
+
+#: tfprofilename.spclickinterval.hint
+msgctxt "tfprofilename.spclickinterval.hint"
+msgid "Profile Click Interval in Millisecond"
+msgstr "Intervalle de clic du Profil en Milliseconde"
 
 #: umain.cdeleteprofile
-msgctxt "umain.cdeleteprofile"
 msgid "Delete profile : "
-msgstr "Supprimer Profil : "
+msgstr "Supprimer Profil :"
 
 #: umain.cmouseaction
-msgctxt "umain.cmouseaction"
 msgid "Mouse Action"
 msgstr "Action Souris"
 
 #: umain.cmousex
-msgctxt "umain.cmousex"
 msgid "Mouse X"
 msgstr "Souris X"
 
 #: umain.cmousey
-msgctxt "umain.cmousey"
 msgid "Mouse Y"
 msgstr "Souris Y"
 
 #: umain.cprofile
 msgctxt "umain.cprofile"
 msgid "Profile"
-msgstr "Profil"
-
+msgstr "Profil :"

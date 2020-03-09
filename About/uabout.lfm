@@ -1,7 +1,7 @@
 object FAbout: TFAbout
-  Left = 1024
+  Left = 741
   Height = 621
-  Top = 160
+  Top = 165
   Width = 570
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
@@ -2129,18 +2129,19 @@ object FAbout: TFAbout
   LCLVersion = '2.0.6.0'
   object Image1: TImage
     AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = LImage
+    AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
-    Cursor = crHandPoint
     Left = 10
-    Height = 144
-    Top = 467
+    Height = 135
+    Top = 476
     Width = 560
-    Anchors = [akLeft, akRight, akBottom]
+    Anchors = [akTop, akLeft, akRight, akBottom]
     BorderSpacing.Left = 10
-    BorderSpacing.Top = 260
+    BorderSpacing.Top = 4
     BorderSpacing.Bottom = 10
     Center = True
     Picture.Data = {
@@ -2343,19 +2344,21 @@ object FAbout: TFAbout
       E984FF02163F239EF25209790000000049454E44AE426082
     }
   end
-  object Label1: TLabel
+  object LCopyright: TLabel
     AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = PageControl1
+    AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 16
-    Top = 408
+    Top = 396
     Width = 570
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 398
+    BorderSpacing.Top = 4
     Caption = 'CopyRight (C)  2020, Daniel Babin'
     ParentColor = False
   end
@@ -2370,34 +2373,35 @@ object FAbout: TFAbout
     Height = 382
     Top = 10
     Width = 550
-    ActivePage = TabSheet1
+    ActivePage = TSChangelog
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
     BorderSpacing.Top = 10
     BorderSpacing.Right = 10
-    BorderSpacing.Bottom = 162
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
+    Images = FMain.ImageList1
     ParentFont = False
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
-    object TabSheet1: TTabSheet
+    object TSAbout: TTabSheet
       Caption = 'About'
-      ClientHeight = 353
+      ClientHeight = 352
       ClientWidth = 540
+      ImageIndex = 7
       object Memo1: TMemo
-        AnchorSideLeft.Control = TabSheet1
-        AnchorSideTop.Control = TabSheet1
-        AnchorSideRight.Control = TabSheet1
+        AnchorSideLeft.Control = TSAbout
+        AnchorSideTop.Control = TSAbout
+        AnchorSideRight.Control = TSAbout
         AnchorSideRight.Side = asrBottom
-        AnchorSideBottom.Control = TabSheet1
+        AnchorSideBottom.Control = TSAbout
         AnchorSideBottom.Side = asrBottom
         Left = 0
-        Height = 353
+        Height = 352
         Top = 0
         Width = 540
         Alignment = taCenter
@@ -3102,19 +3106,20 @@ object FAbout: TFAbout
         TabOrder = 0
       end
     end
-    object TabSheet2: TTabSheet
+    object TSContributor: TTabSheet
       Caption = 'Contributors'
-      ClientHeight = 353
+      ClientHeight = 352
       ClientWidth = 540
+      ImageIndex = 8
       object Memo2: TMemo
-        AnchorSideLeft.Control = TabSheet2
-        AnchorSideTop.Control = TabSheet2
-        AnchorSideRight.Control = TabSheet2
+        AnchorSideLeft.Control = TSContributor
+        AnchorSideTop.Control = TSContributor
+        AnchorSideRight.Control = TSContributor
         AnchorSideRight.Side = asrBottom
-        AnchorSideBottom.Control = TabSheet2
+        AnchorSideBottom.Control = TSContributor
         AnchorSideBottom.Side = asrBottom
         Left = 0
-        Height = 353
+        Height = 352
         Top = 0
         Width = 540
         Alignment = taCenter
@@ -3128,53 +3133,149 @@ object FAbout: TFAbout
           'Lazarus Forum'
           'https://forum.lazarus.freepascal.org'
         )
+        ReadOnly = True
         TabOrder = 0
       end
     end
-    object TabSheet3: TTabSheet
+    object TSChangelog: TTabSheet
       Caption = 'ChangeLog'
-      ClientHeight = 353
+      ClientHeight = 352
       ClientWidth = 540
-      TabVisible = False
+      ImageIndex = 9
       object Memo3: TMemo
-        AnchorSideLeft.Control = TabSheet3
-        AnchorSideTop.Control = TabSheet3
-        AnchorSideRight.Control = TabSheet3
+        AnchorSideLeft.Control = TSChangelog
+        AnchorSideTop.Control = TSChangelog
+        AnchorSideRight.Control = TSChangelog
         AnchorSideRight.Side = asrBottom
-        AnchorSideBottom.Control = TabSheet3
+        AnchorSideBottom.Control = TSChangelog
         AnchorSideBottom.Side = asrBottom
         Left = 0
-        Height = 353
+        Height = 352
         Top = 0
         Width = 540
         Anchors = [akTop, akLeft, akRight, akBottom]
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'DejaVu Sans Mono'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
         Lines.Strings = (
-          'V 0.5.0 '
+          '################'
+          '#    V 0.6.0   #'
+          '################'
+          '  ADDED'
+          '    About'
+          '      - Project Email Address'
+          '      - Github Page'
+          '      - ChangeLog'
           ''
-          ' - First Release under GPL V3 License'
+          '    Main   '
+          '      - Menu -> Add Contributors'
+          '      - Menu -> Add ChangeLog'
+          '      - Automatic Database Migration'
+          '      - Save Last Profile Used and Restore on Restart '
+          '      - Save Last Language Selected and Restore on Restart if Avalible '
+          ''
+          '    Database (Table: Options)'
+          '      - Rename FKey Fields'
+          '      - SelectedProfile      //Selected Profile position in the grid   '
+          '      - DatabaseVersion      //Version of the Database'
+          '      - Language             //Prefered Language'
+          '      - DBGPColor            //Profile Grid Color'
+          '      - DBGPAltColor         //Profile Grid Alternate Color'
+          '      - DBGMColor            //Mouse Grid Color'
+          '      - DBGMAltColor         //Mouse Grid Alternate Color   '
+          ''
+          '  FIXED'
+          '    Main'
+          '      - Menu -> About Show wrong Tab'
+          '      - Menu -> Option Change WindowState'
+          '      - Translations Support'
+          '      - Application disappear when disable systray in option'
+          '      - Profile AutoClick Timer Not always updating      '
+          '  '
+          '    Options'
+          '     - Can only start  1 instance'
+          '     - Restore Last Profile Selected'
+          ''
+          '#################'
+          '#    V 0.5.0    # '
+          '#################'
+          '   - Initial Release under GPL V3 License'
         )
+        ParentFont = False
+        ReadOnly = True
         ScrollBars = ssBoth
         TabOrder = 0
+        WordWrap = False
       end
     end
   end
-  object Label4: TLabel
+  object LEmail: TLabel
     AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = LCopyright
+    AnchorSideTop.Side = asrBottom
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
+    Cursor = crHandPoint
     Left = 0
     Height = 16
-    Top = 428
+    Top = 416
     Width = 570
     Alignment = taCenter
     Anchors = [akTop, akLeft, akRight]
-    BorderSpacing.Top = 414
+    BorderSpacing.Top = 4
+    Caption = 'tinymice.github@gmail.com'
+    Font.Style = [fsUnderline]
+    ParentColor = False
+    ParentFont = False
+    OnClick = LEmailClick
+  end
+  object LImage: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = LURL
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Cursor = crHandPoint
+    Left = 0
+    Height = 16
+    Top = 456
+    Width = 570
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 4
     Caption = 'Icons from Lazarus and www.iconarchive.com'
     Font.Style = [fsUnderline]
     ParentColor = False
     ParentFont = False
-    OnClick = Label2Click
+    OnClick = LImageClick
+  end
+  object LURL: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = LEmail
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Cursor = crHandPoint
+    Left = 0
+    Height = 16
+    Top = 436
+    Width = 570
+    Alignment = taCenter
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 4
+    Caption = 'https://github.com/TheLastCayen/tinymice'
+    Font.Style = [fsUnderline]
+    ParentColor = False
+    ParentFont = False
+    OnClick = LURLClick
   end
 end

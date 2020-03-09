@@ -29,6 +29,7 @@ Var
   VAbout:TFAbout;
 begin
    VAbout:=TFAbout.Create(nil);
+   VAbout.PageControl1.ActivePageIndex := 0;
   try
     VAbout.ShowModal;
   finally
@@ -45,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, LCLIntF, ComCtrls, Process, DefaultTranslator;
+  StdCtrls, ExtCtrls, LCLIntF, ComCtrls, Process, lcltranslator;
 
 type
 
@@ -53,16 +54,21 @@ type
 
   TFAbout = class(TForm)
     Image1: TImage;
-    Label1: TLabel;
-    Label4: TLabel;
+    LCopyright: TLabel;
+    LEmail: TLabel;
+    LImage: TLabel;
+    LURL: TLabel;
     Memo1: TMemo;
     Memo2: TMemo;
     Memo3: TMemo;
     PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
-    TabSheet3: TTabSheet;
+    TSAbout: TTabSheet;
+    TSContributor: TTabSheet;
+    TSChangelog: TTabSheet;
     procedure Label2Click(Sender: TObject);
+    procedure LEmailClick(Sender: TObject);
+    procedure LImageClick(Sender: TObject);
+    procedure LURLClick(Sender: TObject);
   private
     { private declarations }
 
@@ -80,9 +86,25 @@ implementation
 
 { TFAbout }
 
+
 procedure TFAbout.Label2Click(Sender: TObject);
 begin
+
+end;
+
+procedure TFAbout.LEmailClick(Sender: TObject);
+begin
+  OpenURL('mailto:tinymice.github@gmail.com');
+end;
+
+procedure TFAbout.LImageClick(Sender: TObject);
+begin
   OpenURL('http://www.iconarchive.com');
+end;
+
+procedure TFAbout.LURLClick(Sender: TObject);
+begin
+  OpenURL('https://github.com/TheLastCayen/tinymice')
 end;
 
 

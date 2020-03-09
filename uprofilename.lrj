@@ -1,0 +1,8 @@
+{"version":1,"strings":[
+{"hash":118364981,"name":"tfprofilename.caption","sourcebytes":[80,114,111,102,105,108,101,32,78,97,109,101],"value":"Profile Name"},
+{"hash":366789,"name":"tfprofilename.bsave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":77089212,"name":"tfprofilename.bcancel.caption","sourcebytes":[67,97,110,99,101,108],"value":"Cancel"},
+{"hash":38093930,"name":"tfprofilename.lsp.caption","sourcebytes":[80,114,111,102,105,108,101,32,67,108,105,99,107,32,73,110,116,101,114,118,97,108,32,58],"value":"Profile Click Interval :"},
+{"hash":79456404,"name":"tfprofilename.spclickinterval.hint","sourcebytes":[80,114,111,102,105,108,101,32,67,108,105,99,107,32,73,110,116,101,114,118,97,108,32,105,110,32,77,105,108,108,105,115,101,99,111,110,100],"value":"Profile Click Interval in Millisecond"},
+{"hash":97546410,"name":"tfprofilename.lprofilename.caption","sourcebytes":[80,114,111,102,105,108,101,32,58],"value":"Profile :"}
+]}

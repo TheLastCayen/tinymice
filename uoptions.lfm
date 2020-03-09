@@ -2347,7 +2347,7 @@ object FOptions: TFOptions
     Constraints.MinHeight = 30
     Constraints.MinWidth = 72
     Images = FMain.ImageList1
-    ImageIndex = 9
+    ImageIndex = 11
     OnClick = BSaveClick
     TabOrder = 5
   end
@@ -2370,7 +2370,7 @@ object FOptions: TFOptions
     Constraints.MinHeight = 30
     Constraints.MinWidth = 72
     Images = FMain.ImageList1
-    ImageIndex = 10
+    ImageIndex = 12
     OnClick = BCancelClick
     TabOrder = 6
   end

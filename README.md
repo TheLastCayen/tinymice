@@ -30,16 +30,16 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Download
 
-- [Ubuntu](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.5-1.deb) 
-- [Fedora](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice-0.5-1.x86_64.rpm)  
+- [Ubuntu](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.deb) 
+- [Fedora](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice-0.6-1.x86_64.rpm)  
 - [Windows X64](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/TinyMice.msi)
 
 
 
 ### Command
 
-- Ubuntu:  `sudo dpkg -i tinymice_0.5-1.deb `
-- Fedora: `sudo -i tinymice-0.5-1.x86_64.rpm`
+- Ubuntu:  `sudo dpkg -i tinymice_0.6-1.deb `
+- Fedora: `sudo -i tinymice-0.6-1.x86_64.rpm`
 - Windows: `msiexec.exe /i TinyMice.msi`
 
 
@@ -77,7 +77,7 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 ### Command
 
 ```bash
-lazbuild ptinymice.lpi
+make && sudo make install
 ```
 
 
