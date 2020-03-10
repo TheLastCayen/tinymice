@@ -1,7 +1,3 @@
-
-
-
-
 # Description
 
 TinyMice is a simple and light Auto Clicker developed with Lazarus. 
@@ -32,7 +28,7 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 - [Ubuntu](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.deb) 
 - [Fedora](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice-0.6-1.x86_64.rpm)  
-- [Windows X64](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/TinyMice.msi)
+- [Windows X64](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.msi)
 
 
 
@@ -40,11 +36,19 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 - Ubuntu:  `sudo dpkg -i tinymice_0.6-1.deb `
 - Fedora: `sudo -i tinymice-0.6-1.x86_64.rpm`
-- Windows: `msiexec.exe /i TinyMice.msi`
+- Windows: `msiexec.exe /i tinymice_0.6-1.msi`
 
 
 
 # How To Compile
+
+### Download
+
+- [Source tar.gz](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.tar.gz)
+- [Source zip](https://github.com/TheLastCayen/tinymice/archive/master.zip)
+- Git Clone : `git clone https://github.com/TheLastCayen/tinymice.git`
+
+
 
 ### **Dependency**
 
@@ -64,7 +68,9 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
   
 
-### Installing Library
+### How to Installing dependency
+
+- [Install Lazarus](https://wiki.freepascal.org/Installing_Lazarus)
 
 - Ubuntu:  `sudo apt-get install libxtst-dev libsqlite3-dev `
 
@@ -76,11 +82,8 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Command
 
-```bash
-make && sudo make install
-```
-
-
+- Linux :`make && sudo make install`
+- Windows : `lazbuild ptinymice.lpi`
 
 # External Links
 
