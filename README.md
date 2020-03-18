@@ -26,18 +26,21 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Download
 
+#### Linux
+
 - [Ubuntu](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.deb) 
-- [Fedora](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice-0.6-1.x86_64.rpm)  
-- [Windows X64 (exe) ](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.exe)
-- [Windows X64 (msi)](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.msi)
+- [Fedora](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice-0.6-1.x86_64.rpm) 
 
+#### Windows
 
+- [EXE (Default Installer)](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.exe)
+- [MSI installer](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_0.6-1.msi)
+- [Zip No Installer](https://github.com/TheLastCayen/TinyMicePackages/raw/master/bin/tinymice_win_0.6-1.zip)
 
 ### Command
 
 - Ubuntu:  `sudo dpkg -i tinymice_0.6-1.deb `
 - Fedora: `sudo -i tinymice-0.6-1.x86_64.rpm`
-- Windows: `msiexec.exe /i tinymice_0.6-1.msi`
 
 
 
