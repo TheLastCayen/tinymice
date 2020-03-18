@@ -14,7 +14,7 @@ tinymice: $(OBJ)
 
 clean:
 	rm -Rf ./lib
-	rm -Rf /Cross.Codebot-master/source/lib
+	rm -Rf ./libs//Cross.Codebot-master/source/lib
 	rm -Rf ./libs/mouseandkeyinput/lib
 	rm -Rf ./bin
 

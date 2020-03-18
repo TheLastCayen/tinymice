@@ -2373,7 +2373,7 @@ object FAbout: TFAbout
     Height = 382
     Top = 10
     Width = 550
-    ActivePage = TSChangelog
+    ActivePage = TSContributor
     Anchors = [akTop, akLeft, akRight]
     BorderSpacing.Left = 10
     BorderSpacing.Top = 10
@@ -2386,7 +2386,7 @@ object FAbout: TFAbout
     Font.Quality = fqDraft
     Images = FMain.ImageList1
     ParentFont = False
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 0
     object TSAbout: TTabSheet
       Caption = 'About'
@@ -3128,10 +3128,14 @@ object FAbout: TFAbout
           '- Developer - '
           'Daniel Babin'
           ''
+          '- Translations -'
+          'Spanish: Kaycee'
+          'French: Daniel Babin'
           ''
           '- Special Thanks - '
           'Lazarus Forum'
           'https://forum.lazarus.freepascal.org'
+          ''
         )
         ReadOnly = True
         TabOrder = 0
