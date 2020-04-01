@@ -40,7 +40,7 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 ### Command
 
 - Ubuntu:  `sudo dpkg -i tinymice_0.6-1.deb `
-- Fedora: `sudo -i tinymice-0.6-1.x86_64.rpm`
+- Fedora: `sudo rpm -i tinymice-0.6-1.x86_64.rpm`
 
 
 
@@ -87,7 +87,7 @@ GNU General Public License [(GPL v3)](https://www.gnu.org/licenses/gpl-3.0.html)
 ### Command
 
 - Linux :`make && sudo make install`
-- Windows : `lazbuild ptinymice.lpi`
+- Windows : `lazbuild ptinymice_win32.lpi`
 
 # External Links
 
