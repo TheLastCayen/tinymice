@@ -2,7 +2,7 @@
 
 TinyMice is a simple and light Auto Clicker developed with Lazarus. 
 
-The target operating system is Linux,  Windows users can compile the software by removing codebotctrls and the "libs/codebot..." file from the project dependency . There is also a version of Lazarus for Mac OS, but I will need help to support a Mac OS binary.
+The target operating system is Linux,  Windows users can compile the software by removing codebotctrls and the "libs/codebot..." file from the project dependency . There is also a version of Lazarus for Mac OS, but I will need help to support a Mac OS binary. 
 
 
 
